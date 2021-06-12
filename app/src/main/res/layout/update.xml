@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subject"
+        android:textSize="14dp"
+        android:textAlignment="center"
+        android:text="Agenda"
+        android:gravity="center_horizontal" />
+    <EditText
+        android:id="@+id/start"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/subject"
+        android:textSize="16sp"
+        android:text="start"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/end"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start"
+        android:text="end"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+    <Button
+        android:id="@+id/update"
+        android:layout_below="@+id/end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Update"/>
+
+</RelativeLayout>
