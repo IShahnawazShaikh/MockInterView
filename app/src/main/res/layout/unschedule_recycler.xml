@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
+    android:layout_marginTop="5dp"
+    android:background="#fff"
     android:elevation="3dp">
     <RelativeLayout
         android:padding="7dp"
@@ -21,7 +22,7 @@
              android:layout_marginTop="5dp"
              android:textSize="12dp"
              android:layout_marginLeft="10dp"
-             android:textColor="#000" />
+             android:textColor="#561E0A0A" />
          <TextView
              android:id="@+id/fname"
              android:layout_width="wrap_content"
@@ -33,11 +34,9 @@
              android:textColor="#150101"
              android:layout_marginTop="5dp"
              android:layout_toRightOf="@+id/id"
-             android:layout_marginLeft="20dp"
+             android:layout_marginLeft="10dp"
              />
 <!--         150101-->
-
-
          <TextView
              android:id="@+id/lname"
              android:layout_width="wrap_content"
@@ -46,19 +45,23 @@
              android:textSize="14dp"
              android:fontFamily="sans-serif-black"
              android:textStyle="bold"
-             android:textColor="#150101"
+             android:textColor="#061501"
              android:layout_marginTop="5dp"
              android:layout_marginLeft="5dp"
              android:layout_toRightOf="@+id/fname"
              />
-<!--         <CheckBox-->
-<!--             android:id="@+id/check"-->
-<!--             android:layout_width="30dp"-->
-<!--             android:layout_height="30dp"-->
-<!--             android:layout_marginLeft="5dp"-->
-<!--             android:layout_toRightOf="@id/lname"-->
-<!--             />-->
 
+<!--         <TextView-->
+<!--             android:id="@+id/email"-->
+<!--             android:layout_width="wrap_content"-->
+<!--             android:layout_height="wrap_content"-->
+<!--             android:text="shahnawazexplore@gmail.com"-->
+<!--             android:layout_below="@id/fname"-->
+<!--             android:layout_marginTop="5dp"-->
+<!--             android:textSize="12dp"-->
+<!--             android:layout_marginLeft="10dp"-->
+<!--             android:layout_toRightOf="@+id/id"-->
+<!--             android:textColor="#000" />-->
      </RelativeLayout>
     </RelativeLayout>
 

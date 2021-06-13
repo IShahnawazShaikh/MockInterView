@@ -2,6 +2,7 @@ package com.example.mockinterview.ui.createmeet;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -94,7 +95,6 @@ public class CreateMeetingFragment extends Fragment implements RecyclerViewInter
         startPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
                 Calendar c = Calendar.getInstance();
                 set=false;
                 hour = c.get(Calendar.HOUR);
@@ -106,7 +106,6 @@ public class CreateMeetingFragment extends Fragment implements RecyclerViewInter
         endPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
                 set=true;
                 Calendar c = Calendar.getInstance();
                 hour = c.get(Calendar.HOUR);
@@ -125,23 +124,31 @@ public class CreateMeetingFragment extends Fragment implements RecyclerViewInter
                 endT=end.getText().toString();
                 startT = startT.replaceAll("\\s", "");
                 endT = endT.replaceAll("\\s", "");
-                //Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT).show();
 
-                model.unschedule(startT,endT,getActivity()).observe(getActivity(), new Observer<List<Participant>>() {
-                    @Override
-                    public void onChanged(List<Participant> participants) {
-                        //ParticipantList.clear();
-                        ParticipantList= new ArrayList<Participant>(participants);
-                        recyclerView2.setLayoutManager(manager);
-                        ParticipantsAdapter =new ParticipantAdapter(ParticipantList,CreateMeetingFragment.this);
+                if(startT.equals("") || endT.equals("")){
+                   Toast.makeText(getActivity(),"Select Time First",Toast.LENGTH_SHORT).show();
+                }
+                else if(endT.compareTo(startT)<=0){
+                  Toast.makeText(getActivity(),"End time can't be less than or equal to start time",Toast.LENGTH_SHORT).show();
+                }
+
+               else{
+                    model.unschedule(startT,endT,getActivity()).observe(getActivity(), new Observer<List<Participant>>() {
+                        @Override
+                        public void onChanged(List<Participant> participants) {
+                            //ParticipantList.clear();
+                            ParticipantList= new ArrayList<Participant>(participants);
+                            recyclerView2.setLayoutManager(manager);
+                            ParticipantsAdapter =new ParticipantAdapter(ParticipantList,CreateMeetingFragment.this);
 //
 //                        participants.forEach((o1)-> {
 //                            System.out.println("list:----------------  "+o1.getFname());
 //                        });
-                        recyclerView2.setAdapter(ParticipantsAdapter);
-                        ParticipantsAdapter.notifyDataSetChanged();
-                    }
-                });
+                            recyclerView2.setAdapter(ParticipantsAdapter);
+                            ParticipantsAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
             }
         });
         create.setOnClickListener(new View.OnClickListener() {
@@ -173,10 +180,29 @@ public class CreateMeetingFragment extends Fragment implements RecyclerViewInter
 
                    //System.out.println("................."+sb.toString());
                    createMeeting(sb.toString());
+
+
                }
             }
         });
-
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            FetchData model = ViewModelProviders.of(getActivity()).get(FetchData.class);
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onRefresh() {
+                model.unschedule(startT,endT,getActivity()).observe(getActivity(), new Observer<List<Participant>>() {
+                    @Override
+                    public void onChanged(List<Participant> participants) {
+                        ParticipantList= new ArrayList<Participant>(participants);
+                        recyclerView2.setLayoutManager(manager);
+                        ParticipantsAdapter =new ParticipantAdapter(ParticipantList,CreateMeetingFragment.this);
+                        recyclerView2.setAdapter(ParticipantsAdapter);
+                        ParticipantsAdapter.notifyDataSetChanged();
+                        refresh.setRefreshing(false);
+                    }
+                });
+            }
+        });
         return view;
     }
     private void createMeeting(String users) {
@@ -185,8 +211,6 @@ public class CreateMeetingFragment extends Fragment implements RecyclerViewInter
                     String response = insertData(ApiUrl.ADD_MEETING,users);
 
                     JSONObject jsonObject = new JSONObject(response);
-
-                    //System.out.println("........................................"+response);
 
                     final boolean status = jsonObject.getBoolean("status");
 
@@ -266,14 +290,17 @@ public class CreateMeetingFragment extends Fragment implements RecyclerViewInter
         }
     }
     @Override
-    public void onItemClicked(int position) {
+    public void onItemClicked(int position, View itemView) {
+
         Participant participant=ParticipantList.get(position);
 
          if(part.contains(participant.getId())){
              Toast.makeText(getActivity(),"De-selected "+participant.getFname(),Toast.LENGTH_SHORT).show();
              part.remove(participant.getId());
+             itemView.setBackgroundColor(Color.parseColor("#ffffff"));
          }
          else {
+             itemView.setBackgroundColor(Color.parseColor("#57EC25"));
              Toast.makeText(getActivity(),"Selected "+participant.getFname(),Toast.LENGTH_SHORT).show();
              part.add(participant.getId());
          }

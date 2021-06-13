@@ -1,5 +1,6 @@
 package com.example.mockinterview.adapter;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.VHolder> {
     @NonNull
     List<Participant> list;
+    boolean selectedPosition=false;
 //
 //    ONNoteListener mOnNotelistener;
     RecyclerViewInterFace recyclerViewInterFace;
@@ -38,12 +40,13 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull VHolder holder, int position) {
-
         Participant part= list.get(position);
-
        holder.fname.setText(part.getFname());
        holder.lname.setText(part.getLname());
        holder.id.setText(part.getId());
+       //System.out.println("```````````````````` adapter: "+part.getEmail());
+       //holder.email.setText(part.getEmail());
+
     }
 
     @Override
@@ -52,16 +55,17 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     }
 
     public class VHolder extends RecyclerView.ViewHolder  {
-        TextView fname,lname,id;
+        TextView fname,lname,id,email;
         public VHolder(@NonNull View itemView) {
             super(itemView);
             fname=(TextView) itemView.findViewById(R.id.fname);
             lname=(TextView) itemView.findViewById(R.id.lname);
             id=(TextView) itemView.findViewById(R.id.id);
+//            email=(TextView) itemView.findViewById(R.id.email);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                      recyclerViewInterFace.onItemClicked(getAdapterPosition());
+                      recyclerViewInterFace.onItemClicked(getAdapterPosition(),itemView);
                 }
             });
          }

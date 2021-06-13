@@ -10,15 +10,11 @@
 
     <TextView
         android:id="@+id/agendaText"
+        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="16dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:text="Agenda"
         android:gravity="center_horizontal" />
 
@@ -49,10 +45,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/startPick"
-            android:textSize="16sp"
-            android:text="start"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-condensed"
             android:layout_marginLeft="5dp"
-            android:textStyle="bold"/>
+            />
 
     <Button
         android:id="@+id/endPick"
@@ -69,17 +65,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/endPick"
-        android:textSize="16sp"
-        android:text="end"
+        android:textSize="14sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
-        android:textStyle="bold"/>
+        android:fontFamily="sans-serif-condensed"
+        />
     <Button
         android:id="@+id/search"
         android:layout_below="@+id/end"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
         android:text="Search"/>
     <TextView
         android:id="@+id/available"
@@ -93,21 +90,30 @@
 
         android:layout_marginRight="5dp"
      />
-    <androidx.recyclerview.widget.RecyclerView
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/available"
-        android:layout_marginTop="4dp"
-        android:padding="8dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/refresh">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/available"
+            android:layout_marginTop="4dp"
+            android:padding="8dp"
+            android:id="@+id/unschedule_recycler">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        android:id="@+id/unschedule_recycler">
-    </androidx.recyclerview.widget.RecyclerView>
     <Button
-        android:layout_below="@id/search"
+        android:layout_below="@+id/end"
          android:id="@+id/create"
         android:text="Create Meeting"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"/>
 
 </RelativeLayout>

@@ -141,10 +141,10 @@ public class FetchData extends ViewModel {
                                    JSONObject obj=UserJSonarray.getJSONObject(j);
 
                                    Participant participant=new Participant(obj.optString("fname"),obj.optString("lname"),
-                                           obj.optString("id"));
+                                           obj.optString("id"),obj.optString("mail"));
+                                 //System.out.println(".........data.............."+obj.optString("mail")+" "+obj.optString("fname"));
                                 AllMap.put(obj.optString("id"),participant);
                             }
-
                             for(int j=0;j<MeetingsJsonArray.length();j++){
                                 JSONObject obj=MeetingsJsonArray.getJSONObject(j);
                                 Meeting object = new Meeting("" + obj.optString("start_time"),

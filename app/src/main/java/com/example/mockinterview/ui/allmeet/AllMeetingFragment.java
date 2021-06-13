@@ -60,7 +60,6 @@ public class AllMeetingFragment extends Fragment implements RecyclerViewInterFac
         View view = inflater.inflate(R.layout.fragment_view_meetings, container, false);
         Update=view.findViewById(R.id.update);
         recyclerView=(RecyclerView) view.findViewById(R.id.meeting_recycler);
-        progress_bar=(ProgressBar) view.findViewById(R.id.progressBar);
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         manager=new LinearLayoutManager(getContext());
 
@@ -95,7 +94,6 @@ public class AllMeetingFragment extends Fragment implements RecyclerViewInterFac
         model.getMeeting(getActivity()).observe(getActivity(), new Observer<List<Meeting>>() {
             @Override
             public void onChanged(List<Meeting> meet) {
-                progress_bar.setVisibility(View.INVISIBLE);
                 meetingList= new ArrayList<Meeting>(meet);
                 recyclerView.setLayoutManager(manager);
                 recyclerAdapter =new RecyclerAdapter(meetingList,AllMeetingFragment.this);
@@ -111,7 +109,7 @@ public class AllMeetingFragment extends Fragment implements RecyclerViewInterFac
 //    }
 
     @Override
-    public void onItemClicked(int position) {
+    public void onItemClicked(int position,View itemView) {
 
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
         View view=getLayoutInflater().inflate(R.layout.update,null);

@@ -3,22 +3,22 @@ package com.example.mockinterview.model;
 public class Participant {
     private String lname;
     private String fname;
-    String id;
+    private String email;
+    private String id;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public Participant(String fname, String lname, String id, String email) {
+        this.lname = lname;
+        this.fname = fname;
+        this.email = email;
         this.id = id;
     }
-
-    public Participant(String fname, String lname,String id) {
-        this.fname = fname;
-        this.lname = lname;
-        this.id=id;
+    public String getLname() {
+        return lname;
     }
 
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
 
     public String getFname() {
         return fname;
@@ -28,15 +28,19 @@ public class Participant {
         this.fname = fname;
     }
 
-    public String getLname() {
-        return lname;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
+    public String getId() {
+        return id;
+    }
 
-
-
+    public void setId(String id) {
+        this.id = id;
+    }
 }

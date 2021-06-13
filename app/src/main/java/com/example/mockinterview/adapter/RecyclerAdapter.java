@@ -51,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.VHolde
         holder.start.setText("Start: "+meet.getStart_time());
 
        holder.end.setText("End: "+meet.getEnd_time());
-        holder.meet_id.setText("End: "+meet.getMeet_id());
+        holder.meet_id.setText("Meeting ID: "+meet.getMeet_id());
     }
 
     @Override
@@ -71,7 +71,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.VHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                      recyclerViewInterFace.onItemClicked(getAdapterPosition());
+                      recyclerViewInterFace.onItemClicked(getAdapterPosition(),itemView);
                 }
             });
          }
