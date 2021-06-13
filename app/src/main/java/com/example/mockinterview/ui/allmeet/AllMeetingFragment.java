@@ -113,12 +113,21 @@ public class AllMeetingFragment extends Fragment implements RecyclerViewInterFac
 
         AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
         View view=getLayoutInflater().inflate(R.layout.update,null);
+        builder.setView(view);
+        final AlertDialog dialog=builder.create();
 
         final EditText subject=view.findViewById(R.id.subject);
         final EditText start=view.findViewById(R.id.start);
         final EditText end=view.findViewById(R.id.end);
-
+        final Button delete=view.findViewById(R.id.delete);
         Meeting obj=meetingList.get(position);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteMeeting(obj.getMeet_id());
+                dialog.dismiss();
+            }
+        });
 
         subject.setText(obj.getSubject());
         start.setText(obj.getStart_time());
@@ -137,22 +146,64 @@ public class AllMeetingFragment extends Fragment implements RecyclerViewInterFac
 
                 if(subject.getText().toString().equals(subjectinit) && start.getText().toString().equals(startint) &&
                         end.getText().toString().equals(endinit)){
-                    Toast.makeText(getActivity(),"Change atleat one thing",Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getActivity(),"Change atleat one thing",Toast.LENGTH_SHORT).show();
                 }
                 else{
                    update(subject.getText().toString(),start.getText().toString(),end.getText().toString(),obj.getMeet_id());
+                    dialog.dismiss();
                 }
-
 
             }
         });
-        builder.setView(view);
-        final AlertDialog dialog=builder.create();
-
 
         // dialog.setCanceledOnTouchOutside(false);
         //dialog.setCancelable(false);
         dialog.show();
+
+    }
+
+    private void deleteMeeting(String meet_id) {
+        new Thread(() -> {
+            try {
+                String response = deleteDetail(ApiUrl.DELETE_MEETING,meet_id);
+                JSONObject jsonObject = new JSONObject(response);
+                final boolean status = jsonObject.getBoolean("status");
+
+                if (status) {
+                    getActivity().runOnUiThread(() -> {
+                        Toast.makeText(getContext(), "Meeting " + meet_id +" Deleted", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    getActivity().runOnUiThread(() -> {
+                        Toast.makeText(getContext(), "" + "Something went wrong !!!", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            } catch (Exception e) {
+                Toast.makeText(getContext(),"catch",Toast.LENGTH_SHORT).show();
+                getActivity().runOnUiThread(() -> {
+                    e.printStackTrace();
+                });
+            }
+        }).start();
+        //update
+    }
+    private String deleteDetail(String url,String meet_id) throws Exception {
+        if (okHttpClient == null) {
+            okHttpClient = new OkHttpClient();
+        }
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("meet_id", meet_id)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            return response.body().string();
+        }
     }
 
     private void update(String sub, String start, String end,String meet_id) {

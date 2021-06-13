@@ -5,8 +5,8 @@ public class ApiUrl {
     public static final String ALL_MEETINGS = BASE_URL+"AllMeeting.php";
     public static final String ALL_UNSCHEDULE = BASE_URL+"ToScheduleMeeting.php";
     public static final String ADD_MEETING = BASE_URL+"AddMeeting.php";
-
     public static final String UPDATE_MEETING = BASE_URL+"UpdateMeeting.php";
+    public static final String DELETE_MEETING = BASE_URL+"delete.php";
 
 
 }
